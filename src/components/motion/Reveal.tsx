@@ -5,6 +5,24 @@ import { forwardRef, type ElementType, type MouseEventHandler, type ReactNode } 
 import { EASE_PREMIUM, getRevealVariants, type RevealVariant } from "./variants";
 import { usePageReady } from "./usePageReady";
 
+// motion.create(tag) builds a brand-new component type every time it's called.
+// Calling it inline during render (as this file used to) means every re-render
+// of a parent — e.g. typing into a form field — hands React a "new" component
+// type for each Reveal/RevealGroup/RevealItem, which forces a full unmount and
+// remount of that subtree (losing input focus, replaying the mount animation)
+// instead of just updating props. Caching one motion component per tag keeps
+// the type stable across renders so React reconciles instead of remounting.
+const motionTagCache = new Map<ElementType, ReturnType<typeof motion.create>>();
+
+function getMotionTag(as: ElementType) {
+  let cached = motionTagCache.get(as);
+  if (!cached) {
+    cached = motion.create(as);
+    motionTagCache.set(as, cached);
+  }
+  return cached as unknown as typeof motion.div;
+}
+
 // A handful of passthrough props for when `as` renders an interactive element
 // (e.g. as="a") — lets callers make the reveal wrapper itself the link/button
 // instead of nesting a second real element inside it.
@@ -55,7 +73,7 @@ export const Reveal = forwardRef<HTMLElement, RevealProps>(function Reveal(
 ) {
   const prefersReducedMotion = useReducedMotion();
   const pageReady = usePageReady();
-  const MotionTag = motion.create(as as ElementType) as unknown as typeof motion.div;
+  const MotionTag = getMotionTag(as as ElementType);
   const passthrough = { href, target, rel, onClick, ...aria };
 
   if (prefersReducedMotion) {
@@ -146,7 +164,7 @@ export const RevealGroup = forwardRef<HTMLElement, RevealGroupProps>(function Re
 ) {
   const prefersReducedMotion = useReducedMotion();
   const pageReady = usePageReady();
-  const MotionTag = motion.create(as as ElementType) as unknown as typeof motion.div;
+  const MotionTag = getMotionTag(as as ElementType);
   const passthrough = { href, target, rel, onClick, ...aria };
 
   if (prefersReducedMotion) {
@@ -213,7 +231,7 @@ export const RevealItem = forwardRef<HTMLElement, RevealItemProps>(function Reve
   ref,
 ) {
   const prefersReducedMotion = useReducedMotion();
-  const MotionTag = motion.create(as as ElementType) as unknown as typeof motion.div;
+  const MotionTag = getMotionTag(as as ElementType);
   const passthrough = { href, target, rel, onClick, ...aria };
 
   if (prefersReducedMotion) {

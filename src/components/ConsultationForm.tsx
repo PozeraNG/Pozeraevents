@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Reveal, RevealGroup, RevealItem } from "./motion/Reveal";
 
-const CONSULTATION_EMAIL = "pozeraevents@gmail.com";
+type Status = "idle" | "submitting" | "success" | "error";
 
 const fieldClass =
   "h-[58px] w-full rounded-[24px] border border-[#ff803f] bg-white px-[43px] font-body text-[14px] text-ink placeholder:text-muted-text-secondary shadow-[0px_6px_38px_0px_#dae0e5] focus:outline-none";
@@ -26,27 +26,41 @@ export default function ConsultationForm() {
     hearAboutUs: "",
   });
 
+  const [status, setStatus] = useState<Status>("idle");
+
   const update = (key: keyof typeof fields) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setFields((prev) => ({ ...prev, [key]: e.target.value }));
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const subject = `Consultation Request — ${fields.firstName} ${fields.lastName}`;
-    const body = `Name: ${fields.firstName} ${fields.lastName}
-City & State of Event: ${fields.cityState}
-Event Address: ${fields.eventAddress}
-Email: ${fields.email}
-Phone: ${fields.phone}
-Event Date: ${fields.eventDate}
-Services interested in: ${fields.services}
-Estimated Budget: ${fields.budget}
-Number of Guests: ${fields.guests}
-Is event date fixed: ${fields.dateFixed}
-OK to text: ${fields.okToText}
-How did you hear about us: ${fields.hearAboutUs}
-Details: ${fields.message}`;
-    const mailto = `mailto:${CONSULTATION_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
+    setStatus("submitting");
+    try {
+      const response = await fetch("/api/consultation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(fields),
+      });
+      if (!response.ok) throw new Error("Request failed");
+      setStatus("success");
+      setFields({
+        firstName: "",
+        lastName: "",
+        cityState: "",
+        eventAddress: "",
+        email: "",
+        phone: "",
+        eventDate: "",
+        services: "",
+        budget: "",
+        message: "",
+        guests: "",
+        dateFixed: "",
+        okToText: "",
+        hearAboutUs: "",
+      });
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -182,13 +196,24 @@ Details: ${fields.message}`;
           </RevealItem>
         </RevealGroup>
 
-        <Reveal delay={0.1}>
+        <Reveal delay={0.1} className="flex flex-col items-start gap-3">
           <button
             type="submit"
-            className="mt-2 w-fit rounded-[72px] border-2 border-white bg-brand-orange px-[55px] py-4 font-body text-[18px] text-white transition duration-300 hover:scale-[1.03] hover:bg-[#e86f2f] hover:shadow-[0_12px_24px_-8px_rgba(253,126,20,0.5)]"
+            disabled={status === "submitting"}
+            className="mt-2 w-fit rounded-[72px] border-2 border-white bg-brand-orange px-[55px] py-4 font-body text-[18px] text-white transition duration-300 hover:scale-[1.03] hover:bg-[#e86f2f] hover:shadow-[0_12px_24px_-8px_rgba(253,126,20,0.5)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
           >
-            Submit
+            {status === "submitting" ? "Sending..." : "Submit"}
           </button>
+          {status === "success" && (
+            <p className="font-body text-[16px] text-green-700">
+              Thanks! Your request has been sent — we&apos;ll be in touch within 1-2 business days.
+            </p>
+          )}
+          {status === "error" && (
+            <p className="font-body text-[16px] text-red-600">
+              Something went wrong sending your request. Please try again, or WhatsApp us directly at +234 814 611 7487.
+            </p>
+          )}
         </Reveal>
       </form>
     </section>
