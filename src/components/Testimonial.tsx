@@ -67,7 +67,7 @@ export default function Testimonial() {
   };
 
   return (
-    <section className="relative bg-white-bg py-24">
+    <section className="relative bg-white-bg py-16">
       <div className="mx-auto max-w-[1360px] px-6">
         <RevealGroup as="div" stagger={0.1} className="mb-12 flex items-center justify-center gap-4 lg:justify-start">
           <RevealItem>

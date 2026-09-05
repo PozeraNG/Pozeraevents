@@ -4,7 +4,7 @@ import { Reveal, RevealGroup, RevealItem } from "./motion/Reveal";
 
 export default function WeddingShowcase() {
   return (
-    <section className="relative overflow-hidden bg-white-bg py-24">
+    <section className="relative overflow-hidden bg-white-bg py-16">
       <Image
         src="/images/wedding-bg.png"
         alt=""

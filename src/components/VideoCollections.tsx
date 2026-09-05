@@ -47,7 +47,7 @@ export default function VideoCollections() {
   };
 
   return (
-    <section id="gallery" className="overflow-hidden bg-white-bg py-20">
+    <section id="gallery" className="overflow-hidden bg-white-bg py-14">
       <div className="mx-auto max-w-[1360px] px-6">
         <div className="mb-10 flex items-center justify-between">
           <Reveal as="h2" className="font-display text-fluid-h2 font-bold text-charcoal-card">

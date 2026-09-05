@@ -20,7 +20,7 @@ export default function AcademyCTA() {
   };
 
   return (
-    <section id="academy" className="relative overflow-hidden bg-[#fcf8f4] py-24">
+    <section id="academy" className="relative overflow-hidden bg-[#fcf8f4] py-16">
       <div className="mx-auto flex max-w-[1360px] flex-col items-center gap-16 px-6 lg:flex-row lg:items-center lg:gap-12">
         <Reveal
           as="div"
@@ -46,10 +46,10 @@ export default function AcademyCTA() {
           </Reveal>
 
           <RevealItem>
-            <Image src="/images/academy-logo.png" alt="Pozera Events Academy" width={176} height={131} />
+            <Image src="/images/academy-logo.png" alt="Pozera Events Academy" width={176} height={111} />
           </RevealItem>
 
-          <RevealItem as="h2" variant="fade-up-blur" className="-mt-3 font-display text-fluid-h2 font-bold leading-tight text-charcoal-card">
+          <RevealItem as="h2" variant="fade-up-blur" className="font-display text-fluid-h2 font-bold leading-tight text-charcoal-card">
             Learn to plan events professionally — in four weeks.
           </RevealItem>
           <RevealItem as="p" className="font-body text-[18px] font-light leading-[30px] text-muted-text lg:text-[22px]">

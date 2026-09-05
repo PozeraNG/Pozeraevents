@@ -4,7 +4,7 @@ import { Reveal, RevealGroup, RevealItem } from "./motion/Reveal";
 
 export default function About() {
   return (
-    <section id="about" className="relative overflow-hidden bg-white-bg py-24">
+    <section id="about" className="relative overflow-hidden bg-white-bg py-16">
       <Reveal
         variant="fade-in"
         duration={1.2}

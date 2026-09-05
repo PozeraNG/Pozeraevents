@@ -10,7 +10,7 @@ const categories = [
 
 export default function Services() {
   return (
-    <section id="services" className="relative overflow-hidden bg-[#fcf8f4] py-24">
+    <section id="services" className="relative overflow-hidden bg-[#fcf8f4] py-16">
       <Image
         src="/images/services-mandala-bg.png"
         alt=""

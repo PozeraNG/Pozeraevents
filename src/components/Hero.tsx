@@ -51,7 +51,7 @@ export default function Hero() {
         trigger="mount"
         stagger={0.16}
         delay={0.15}
-        className="relative mx-auto flex max-w-[1360px] flex-col items-center gap-[26px] px-6 py-24 lg:flex-row lg:items-center lg:py-32"
+        className="relative mx-auto flex max-w-[1360px] flex-col items-center gap-[26px] px-6 py-12 lg:flex-row lg:items-center lg:py-16"
       >
         <RevealGroup as="div" trigger="mount" stagger={0.14} className="flex w-full max-w-[832px] flex-col gap-[53px]">
           <div className="flex flex-col items-start gap-[25px]">

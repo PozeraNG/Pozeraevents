@@ -22,7 +22,7 @@ const steps = [
 
 export default function HowWeWork() {
   return (
-    <section className="bg-white-bg py-24">
+    <section className="bg-white-bg py-16">
       <div className="mx-auto flex max-w-[1360px] flex-col items-center gap-12 px-6">
         <RevealGroup as="div" stagger={0.12} className="flex flex-col items-center gap-2 text-center">
           <RevealItem>

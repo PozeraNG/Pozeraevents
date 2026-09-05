@@ -10,7 +10,7 @@ const team = [
 
 export default function Team() {
   return (
-    <section id="team" className="relative overflow-hidden bg-[#fcf8f4] py-24">
+    <section id="team" className="relative overflow-hidden bg-[#fcf8f4] py-16">
       <Reveal
         variant="fade-in"
         duration={1.2}

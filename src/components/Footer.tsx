@@ -40,7 +40,7 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-white-bg py-24">
+    <footer className="relative overflow-hidden bg-white-bg py-16">
       <Reveal
         variant="fade-in"
         duration={1.2}
