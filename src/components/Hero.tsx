@@ -90,15 +90,24 @@ export default function Hero() {
             </RevealItem>
           </div>
 
-          <RevealItem className="flex items-center gap-x-[12px] gap-y-6 p-[10px] sm:flex-wrap sm:gap-x-[19px]">
+          <RevealItem className="flex flex-wrap items-center gap-x-[12px] gap-y-4 p-[10px] sm:gap-x-[19px] sm:gap-y-6">
             {features.map((feature, i) => (
-              <div key={feature.title} className="flex items-end gap-[13px] sm:gap-[21px]">
-                {i > 0 && <span className="h-[35px] w-[1.5px] shrink-0 bg-[#ff803f] sm:h-[55px] sm:w-[2px]" />}
+              <div
+                key={feature.title}
+                className={`flex items-end gap-[13px] sm:gap-[21px] ${i === 2 ? "basis-full sm:basis-auto" : ""}`}
+              >
+                {i > 0 && (
+                  <span
+                    className={`h-[40px] w-[1.5px] shrink-0 bg-[#ff803f] sm:h-[55px] sm:w-[2px] ${
+                      i === 2 ? "hidden sm:block" : ""
+                    }`}
+                  />
+                )}
                 <div className="flex flex-col gap-[4px] sm:gap-[9px]">
-                  <span className="font-display text-[17px] font-bold text-charcoal-card sm:text-[24px]">
+                  <span className="font-display text-[20px] font-bold text-charcoal-card sm:text-[24px]">
                     {feature.title}
                   </span>
-                  <span className="font-body text-[11px] text-muted-text sm:text-[18px]">{feature.detail}</span>
+                  <span className="font-body text-[14px] text-muted-text sm:text-[18px]">{feature.detail}</span>
                 </div>
               </div>
             ))}
